@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace Assignment6AirlineReservation
 {
-    class clsDataAccess
+    public class clsDataAccess
     {
         /// <summary>
         /// Connection string to the database.
