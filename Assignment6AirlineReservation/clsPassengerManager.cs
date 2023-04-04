@@ -57,6 +57,12 @@ namespace Assignment6AirlineReservation
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+
+        //AddPassenger Method
+
+        //UpdatePassengerSeat Method
+
+        //DeletePassenger Method
     }
 }
 

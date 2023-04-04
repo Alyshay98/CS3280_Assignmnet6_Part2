@@ -92,6 +92,7 @@ namespace Assignment6AirlineReservation
                 cbChoosePassenger.ItemsSource = clsPassengerMan.GetPassenger(selection.sFlightID);
 
                 //FillPassengerSeats
+                FillPassengerSeats();
             }
             catch (Exception ex)
             {
@@ -101,11 +102,44 @@ namespace Assignment6AirlineReservation
         }
 
         //FillPassengerSeatsMethod
-
-        //Reset all seats in the selected flight to blue
-        //Loop through each passenger in the list
-        //Loop through each seat in teh selected flight, like "c767_seats.Children"
-        //Then compare the passengers seat to the label's content and if they match, then change the background to red because the seat is taken.
+        private void FillPassengerSeats()
+        {
+            //Reset all seats in the selected flight to blue
+            //Loop through each passenger in the list
+            //Loop through each seat in the selected flight, like "c767_seats.Children"
+            //Then compare the passengers seat to the label's content and if they match, then change the background to red because the seat is taken.
+            
+            clsFlight selectedFlight = (clsFlight)(cbChooseFlight.SelectedItem);
+            if(selectedFlight.sFlightID == "1")
+            {
+                cA380_Seats.Background = Brushes.Blue;
+                foreach(clsPassenger passengers in clsPassengerMan.GetPassenger(selectedFlight.sFlightID))
+                {
+                    foreach(Label Seats in cA380_Seats.Children)
+                    {
+                        if(passengers == Seats.ToString())
+                        {
+                            cA380_Seats.Background = Brushes.Red;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                c767_Seats.Background = Brushes.Blue;
+                foreach (var f in clsPassengerMan.GetPassenger(selectedFlight.sFlightID))
+                {
+                    foreach (var j in c767_Seats.Children)
+                    {
+                        if (f == j)
+                        {
+                            cA380_Seats.Background = Brushes.Red;
+                        }
+                    }
+                }
+            }
+            
+        }
 
         private void cmdAddPassenger_Click(object sender, RoutedEventArgs e)
         {
@@ -115,18 +149,69 @@ namespace Assignment6AirlineReservation
                 wndAddPass.ShowDialog();
 
 
-                //check the Add Passenger window to see if the userr clicked Save and if they did, then
-                //Disable  everything except the seats, so they are forced to click a seat.
-
+                //check the Add Passenger window to see if the user clicked Save and if they did, then
+                //Disable everything except the seats, so they are forced to click a seat.
                 //Set the variable bAddPassengerMode that tells that the user is in Add Passenger mode
+
+                if (wndAddPassenger.boolSaveClicked == true)
+                {
+                    cbChooseFlight.IsEnabled = false;
+                    cbChoosePassenger.IsEnabled = false;
+                    gPassengerCommands.IsEnabled = false;
+                    lblPassengersSeatNumber.IsEnabled = false;
+                    cmdAddPassenger.IsEnabled = false;
+                    cmdChangeSeat.IsEnabled = false;
+                    cmdDeletePassenger.IsEnabled = false;
+                    gbColorKey.IsEnabled = false;
+
+                    bAddPassengerMode = true;
+                }
             }
             catch (Exception ex)
             {
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                     MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
+        }      
+
+        private void cmdChangeSeat_Click(object sender, RoutedEventArgs e)
+        {
+            //Passenger is selected
+            //Lock down window and set bChangeSeatMode, force user to select a seat
         }
 
+        private void Seat_Click(object sender, MouseButtonEventArgs e)
+        {
+            //This method will get called when a user clicks on any seat.
+            //
+            //What mode is the program in? bAddPassengerMode or bChangeSeatMode or regular seat selection
+            //
+            //bAddPassengerMode
+            //Insert a new passenger into the database, then insert a record into the link table (Done in another class).
+            //bChangeSeatMode
+            //Only change the seat if the seat is empty (blue).
+            //If it's empty then update the link table to update the user's new seat (Done in another class).
+
+            //Otherwise in regular seat selection:
+            //If a seat is taken (red), then loop through the passengers in the combo box,
+            //and keep looping until the seat that was clicked, its number matches a passenger's seat number,
+            //then select that combo box index or selected item and put the passenger's seat in the label.
+        }
+
+        private void cmdDeletePassenger_Click(object sender, RoutedEventArgs e)
+        {
+            //Selected Passenger
+            //Delete the currently selected passenger (Done in another class)
+            //Reload the passengers into the combo box
+            //reload the taken seats
+        }
+
+        /// <summary>
+        /// exception handler that shows the error
+        /// </summary>
+        /// <param name="sClass">the class</param>
+        /// <param name="sMethod">the method</param>
+        /// <param name="sMessage">the error message</param>
         private void HandleError(string sClass, string sMethod, string sMessage)
         {
             try
@@ -137,11 +222,6 @@ namespace Assignment6AirlineReservation
             {
                 System.IO.File.AppendAllText(@"C:\Error.txt", Environment.NewLine + "HandleError Exception: " + ex.Message);
             }
-        }
-
-        private void Seat_Click(object sender, MouseButtonEventArgs e)
-        {
-
         }
     }
 }

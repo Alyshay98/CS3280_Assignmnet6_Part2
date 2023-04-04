@@ -21,6 +21,12 @@ namespace Assignment6AirlineReservation
     public partial class wndAddPassenger : Window
     {
         /// <summary>
+        /// Variable to check if the user clicked Save
+        /// </summary>
+        public static bool boolSaveClicked = false;
+
+
+        /// <summary>
         /// constructor for the add passenger window
         /// </summary>
         public wndAddPassenger()
@@ -82,9 +88,12 @@ namespace Assignment6AirlineReservation
 
         private void cmdSave_Click(object sender, RoutedEventArgs e)
         {
-            //If they pressed "Save" then set a local boolean variable that signals that the user clciked Save and not Cancel.
-            //Take them back to the main fomr
+            //If they pressed "Save" then set a local boolean variable that signals that the user clicked Save and not Cancel.
+            //Take them back to the main form
             //Dont insert a new passenger here, think about if the applicatin was closed
+
+            boolSaveClicked = true;
+            
             this.Close();
         }
     }
