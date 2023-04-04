@@ -82,6 +82,9 @@ namespace Assignment6AirlineReservation
 
         private void cmdSave_Click(object sender, RoutedEventArgs e)
         {
+            //If they pressed "Save" then set a local boolean variable that signals that the user clciked Save and not Cancel.
+            //Take them back to the main fomr
+            //Dont insert a new passenger here, think about if the applicatin was closed
             this.Close();
         }
     }

@@ -37,6 +37,16 @@ namespace Assignment6AirlineReservation
         /// </summary>
         clsPassengerManager clsPassengerMan;
 
+        /// <summary>
+        /// Determines if we are adding a Passenger
+        /// </summary>
+        bool bAddPassengerMode;
+
+        /// <summary>
+        /// Determines if we are changing the seat
+        /// </summary>
+        bool bChangeSeatMode;
+
         public MainWindow()
         {
             try
@@ -80,6 +90,8 @@ namespace Assignment6AirlineReservation
                     CanvasA380.Visibility = Visibility.Visible;
                 }
                 cbChoosePassenger.ItemsSource = clsPassengerMan.GetPassenger(selection.sFlightID);
+
+                //FillPassengerSeats
             }
             catch (Exception ex)
             {
@@ -88,12 +100,25 @@ namespace Assignment6AirlineReservation
             }
         }
 
+        //FillPassengerSeatsMethod
+
+        //Reset all seats in the selected flight to blue
+        //Loop through each passenger in the list
+        //Loop through each seat in teh selected flight, like "c767_seats.Children"
+        //Then compare the passengers seat to the label's content and if they match, then change the background to red because the seat is taken.
+
         private void cmdAddPassenger_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 wndAddPass = new wndAddPassenger();
                 wndAddPass.ShowDialog();
+
+
+                //check the Add Passenger window to see if the userr clicked Save and if they did, then
+                //Disable  everything except the seats, so they are forced to click a seat.
+
+                //Set the variable bAddPassengerMode that tells that the user is in Add Passenger mode
             }
             catch (Exception ex)
             {
@@ -112,6 +137,11 @@ namespace Assignment6AirlineReservation
             {
                 System.IO.File.AppendAllText(@"C:\Error.txt", Environment.NewLine + "HandleError Exception: " + ex.Message);
             }
+        }
+
+        private void Seat_Click(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
