@@ -58,5 +58,30 @@ namespace Assignment6AirlineReservation
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+
+        public List<string> GetFlightSeats(string sFlightID)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                int iRet = 0;
+
+                string sSQL = clsSQL.GetFlightSeats(sFlightID);
+                ds = dataAccess.ExecuteSQLStatement(sSQL, ref iRet);
+
+                List<string> seats = new List<string>();
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    seats.Add(dr[0].ToString());
+                }
+                return seats;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
     }
 }

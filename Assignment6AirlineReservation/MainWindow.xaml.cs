@@ -110,32 +110,21 @@ namespace Assignment6AirlineReservation
             //Then compare the passengers seat to the label's content and if they match, then change the background to red because the seat is taken.
             
             clsFlight selectedFlight = (clsFlight)(cbChooseFlight.SelectedItem);
-            if(selectedFlight.sFlightID == "1")
+            if(selectedFlight.sFlightID == "2")
             {
-                cA380_Seats.Background = Brushes.Blue;
-                foreach(clsPassenger passengers in clsPassengerMan.GetPassenger(selectedFlight.sFlightID))
+                
+                foreach(string SeatNum in clsFlightMan.GetFlightSeats(selectedFlight.sFlightID))
                 {
-                    foreach(Label Seats in cA380_Seats.Children)
-                    {
-                        if(passengers == Seats.ToString())
-                        {
-                            cA380_Seats.Background = Brushes.Red;
-                        }
-                    }
+                    Label backgroundlbl = cA380_Seats.FindName("SeatA" + SeatNum) as Label;
+                    backgroundlbl.Background = Brushes.Red;
                 }
             }
             else
             {
-                c767_Seats.Background = Brushes.Blue;
-                foreach (var f in clsPassengerMan.GetPassenger(selectedFlight.sFlightID))
+                foreach (string SeatNum in clsFlightMan.GetFlightSeats(selectedFlight.sFlightID))
                 {
-                    foreach (var j in c767_Seats.Children)
-                    {
-                        if (f == j)
-                        {
-                            cA380_Seats.Background = Brushes.Red;
-                        }
-                    }
+                    Label backgroundlbl = c767_Seats.FindName("Seat" + SeatNum) as Label;
+                    backgroundlbl.Background = Brushes.Red;
                 }
             }
             

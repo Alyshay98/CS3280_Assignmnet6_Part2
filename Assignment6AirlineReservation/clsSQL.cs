@@ -28,6 +28,20 @@ namespace Assignment6AirlineReservation
             }
         }
 
+        public static String GetFlightSeats(string sFlightID)
+        {
+            try
+            {
+                string sSQL = "Select Seat_Number from FLIGHT_PASSENGER_LINK Where flight_ID = " + sFlightID;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
 
         /// <summary>
         /// SQL method to get the Passengers
