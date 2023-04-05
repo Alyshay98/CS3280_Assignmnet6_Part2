@@ -187,6 +187,18 @@ namespace Assignment6AirlineReservation
             //What mode is the program in? bAddPassengerMode or bChangeSeatMode or regular seat selection
             //
             //bAddPassengerMode
+            if(bAddPassengerMode == true)
+            {
+
+            }
+            else if(bChangeSeatMode == true)
+            {
+
+            }
+            else
+            {
+
+            }
             //Insert a new passenger into the database, then insert a record into the link table (Done in another class).
             //bChangeSeatMode
             //Only change the seat if the seat is empty (blue).
