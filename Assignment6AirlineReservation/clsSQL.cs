@@ -67,13 +67,13 @@ namespace Assignment6AirlineReservation
             }
         }
 
-        public static String UpdateSeatNumbers()
+        public static String UpdateSeatNumbers(string lblSeat, string sFlightID, string sPassID)
         {
             try
             {
                 string sSQL = "UPDATE FLIGHT_PASSENGER_LINK " +
-                              "SET Seat_Number = '5' " +
-                              "WHERE FLIGHT_ID = 1 AND PASSENGER_ID = 2";
+                              "SET Seat_Number = " + lblSeat +
+                              "WHERE FLIGHT_ID =" + sFlightID + "AND PASSENGER_ID = " + sPassID;
                 return sSQL;
             }
             catch (Exception ex)
@@ -83,40 +83,40 @@ namespace Assignment6AirlineReservation
             }
         }
 
-        public static String InsertPassenger()
+        public static String InsertPassenger(string FirstName, string LastName)
         {
-            string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('FirstName','LastName')";
+            string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('" + FirstName + "','" + LastName + "')";
 
             return sSQL;
         }
 
-        public static string InsertIntoLinkTable()
+        public static string InsertIntoLinkTable(string sFlightID, string PassID, string sSeatNum)
         {
             string sSQL = "INSERT INTO Flight_Passenger_Link(Flight_ID, Passenger_ID, Seat_Number) " +
-                          "VALUES( 1 , 6 , 3)";
+                          "VALUES(" +sFlightID +" ," + PassID + ", " + sSeatNum +")";
             return sSQL;
         }
 
-        public static String DeleteLink()
+        public static String DeleteLink(string sFlightID, string PassID)
         {
             string sSQL = "Delete FROM FLIGHT_PASSENGER_LINK " +
-                          "WHERE FLIGHT_ID = 1 AND " +
-                          "PASSENGER_ID = 6";
+                          "WHERE FLIGHT_ID = " + sFlightID +
+                          "AND PASSENGER_ID = " + PassID;
             return sSQL;
         }
 
-        public static string DeletePassengers()
+        public static string DeletePassengers(string PassID)
         {
             string sSQL = "Delete FROM PASSENGER " +
-                          "WHERE PASSENGER_ID = 6";
+                          "WHERE PASSENGER_ID = " + PassID;
             return sSQL;
         }
 
-        public static String InsertNewPassenger()
+        public static String InsertNewPassenger(string FirstName, string LastName)
         {
-            string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('FirstName','LastName')";
+            string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('"+FirstName+"','" + LastName + "')";
 
-            sSQL = "SELECT Passenger_ID from Passenger where First_Name = 'Shawn' AND Last_Name = 'Cowder'";
+            sSQL = "SELECT Passenger_ID from Passenger where First_Name =" + FirstName + "AND Last_Name = " + LastName;
             return sSQL;
         } 
     }

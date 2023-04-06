@@ -58,7 +58,42 @@ namespace Assignment6AirlineReservation
             }
         }
 
-        //AddPassenger Method
+        
+        /// <summary>
+        /// Method to Add a new passenger
+        /// Binds the data to method from the database
+        /// </summary>
+        /// <param name="FirstName"></param>
+        /// <param name="LastName"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public List<clsPassenger> AddPassenger(string FirstName, string LastName)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                int iRet = 0;
+                List<clsPassenger> Passengers = new List<clsPassenger>();
+
+                string sSQL = clsSQL.InsertNewPassenger(FirstName, LastName);
+
+                ds = dataAccess.ExecuteSQLStatement(sSQL, ref iRet);
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    clsPassenger passenger = new clsPassenger();
+                    passenger.FirstName = dr[0].ToString();
+                    passenger.LastName = dr[1].ToString();
+                    Passengers.Add(passenger);
+                }
+                return Passengers;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
         //UpdatePassengerSeat Method
 

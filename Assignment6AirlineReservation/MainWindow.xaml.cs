@@ -161,7 +161,21 @@ namespace Assignment6AirlineReservation
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                     MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
-        }      
+        }
+
+        private void cbChoosePassenger_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                clsPassenger selection = (clsPassenger)cbChoosePassenger.SelectedItem;
+                
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
 
         private void cmdChangeSeat_Click(object sender, RoutedEventArgs e)
         {
@@ -176,27 +190,26 @@ namespace Assignment6AirlineReservation
             //What mode is the program in? bAddPassengerMode or bChangeSeatMode or regular seat selection
             //
             //bAddPassengerMode
-            if(bAddPassengerMode == true)
-            {
-
-            }
-            else if(bChangeSeatMode == true)
-            {
-
-            }
-            else
-            {
-
-            }
             //Insert a new passenger into the database, then insert a record into the link table (Done in another class).
+            if (bAddPassengerMode == true)
+            {
+                
+            }
             //bChangeSeatMode
             //Only change the seat if the seat is empty (blue).
             //If it's empty then update the link table to update the user's new seat (Done in another class).
+            else if (bChangeSeatMode == true)
+            {
 
+            }
             //Otherwise in regular seat selection:
             //If a seat is taken (red), then loop through the passengers in the combo box,
             //and keep looping until the seat that was clicked, its number matches a passenger's seat number,
             //then select that combo box index or selected item and put the passenger's seat in the label.
+            else
+            {
+
+            }  
         }
 
         private void cmdDeletePassenger_Click(object sender, RoutedEventArgs e)
