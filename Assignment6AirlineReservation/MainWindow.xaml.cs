@@ -199,6 +199,7 @@ namespace Assignment6AirlineReservation
         private void cmdChangeSeat_Click(object sender, RoutedEventArgs e)
         {
             //Passenger is selected
+            clsPassenger passenger = cbChoosePassenger.SelectedItem as clsPassenger;
             //Lock down window and set bChangeSeatMode, force user to select a seat
         }
 
