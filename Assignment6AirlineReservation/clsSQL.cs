@@ -189,7 +189,7 @@ namespace Assignment6AirlineReservation
         /// </summary>
         /// <param name="PassID"></param>
         /// <returns></returns>
-        public static string DeletePassengers(string PassID)
+        public static string DeletePassenger(string PassID)
         {
             try
             {

@@ -95,7 +95,27 @@ namespace Assignment6AirlineReservation
             }
         }
 
-        //UpdatePassengerSeat Method
+        /// <summary>
+        /// Updates the passenger seat
+        /// </summary>
+        /// <param name="Seat"></param>
+        /// <param name="FlightID"></param>
+        /// <param name="PassID"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public void UpdatePassengerSeat(string Seat, string FlightID, string PassID)
+        {
+            try
+            {
+                string sSQL = clsSQL.UpdateSeatNumbers(Seat, FlightID, PassID);
+                dataAccess.ExecuteNonQuery(sSQL);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
         
         /// <summary>
@@ -104,23 +124,15 @@ namespace Assignment6AirlineReservation
         /// <param name="PassID"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public List<clsPassenger> DeletePassenger(string PassID)
+        public void DeletePassenger(string PassID, string sFlightID)
         {
             try
             {
-                DataSet ds = new DataSet();
-                int iRet = 0;
-                List<clsPassenger> Passengers = new List<clsPassenger>();
+                string sSQL = clsSQL.DeletePassenger(PassID);
+                dataAccess.ExecuteNonQuery(sSQL);
 
-                string sSQL = clsSQL.DeletePassengers(PassID);
-
-                ds = dataAccess.ExecuteSQLStatement(sSQL, ref iRet);
-
-                foreach (DataRow dr in ds.Tables[0].Rows)
-                {
-                    
-                }
-                return Passengers;
+                sSQL = clsSQL.DeleteLink(sFlightID, PassID);
+                dataAccess.ExecuteNonQuery(sSQL);
             }
             catch (Exception ex)
             {
