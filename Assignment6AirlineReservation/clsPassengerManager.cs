@@ -97,7 +97,56 @@ namespace Assignment6AirlineReservation
 
         //UpdatePassengerSeat Method
 
-        //DeletePassenger Method
+        
+        /// <summary>
+        /// Deletes a passenger from the database
+        /// </summary>
+        /// <param name="PassID"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public List<clsPassenger> DeletePassenger(string PassID)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                int iRet = 0;
+                List<clsPassenger> Passengers = new List<clsPassenger>();
+
+                string sSQL = clsSQL.DeletePassengers(PassID);
+
+                ds = dataAccess.ExecuteSQLStatement(sSQL, ref iRet);
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    
+                }
+                return Passengers;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        public string GetPassengerSeat(string sFlightID, string sPassID)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                int iRet = 0;
+
+                string sSQL = clsSQL.GetPassengerSeat(sFlightID, sPassID);
+                ds = dataAccess.ExecuteSQLStatement(sSQL, ref iRet);
+
+                return ds.Tables[0].Rows[0][0].ToString();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
     }
 }
 

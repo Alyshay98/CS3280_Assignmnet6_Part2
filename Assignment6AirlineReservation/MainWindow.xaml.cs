@@ -167,7 +167,26 @@ namespace Assignment6AirlineReservation
         {
             try
             {
-                clsPassenger selection = (clsPassenger)cbChoosePassenger.SelectedItem;
+                if(cbChoosePassenger.SelectedIndex == -1)
+                {
+                    return;
+                }
+                clsPassenger passenger = cbChoosePassenger.SelectedItem as clsPassenger;
+
+                clsFlight selectedFlight = (clsFlight)(cbChooseFlight.SelectedItem);
+
+                Label lblPassengersSeatNumber;
+
+                if (selectedFlight.sFlightID == "1")
+                {
+                    lblPassengersSeatNumber = c767_Seats.FindName("Seat" + clsPassengerMan.GetPassengerSeat(selectedFlight.sFlightID, passenger.PassengerID)) as Label;
+                    lblPassengersSeatNumber.Background = Brushes.Lime;
+                }
+                else
+                {
+                    lblPassengersSeatNumber = cA380_Seats.FindName("SeatA" + clsPassengerMan.GetPassengerSeat(selectedFlight.sFlightID, passenger.PassengerID)) as Label;
+                    lblPassengersSeatNumber.Background = Brushes.Lime;
+                }
                 
             }
             catch (Exception ex)
@@ -185,6 +204,8 @@ namespace Assignment6AirlineReservation
 
         private void Seat_Click(object sender, MouseButtonEventArgs e)
         {
+            Label label = sender as Label;
+            clsFlight currFlight = cbChooseFlight.SelectedItem as clsFlight;
             //This method will get called when a user clicks on any seat.
             //
             //What mode is the program in? bAddPassengerMode or bChangeSeatMode or regular seat selection
@@ -200,7 +221,10 @@ namespace Assignment6AirlineReservation
             //If it's empty then update the link table to update the user's new seat (Done in another class).
             else if (bChangeSeatMode == true)
             {
-
+                if(!(label.Background == Brushes.Blue))
+                {
+                    return;
+                }
             }
             //Otherwise in regular seat selection:
             //If a seat is taken (red), then loop through the passengers in the combo box,
@@ -208,16 +232,29 @@ namespace Assignment6AirlineReservation
             //then select that combo box index or selected item and put the passenger's seat in the label.
             else
             {
-
+                //check the background of label only run the for loop if label.Background is red
+                foreach(clsPassenger passenger in cbChoosePassenger.Items)
+                {
+                    if (clsPassengerMan.GetPassengerSeat(currFlight.sFlightID, passenger.PassengerID) == label.Content.ToString())
+                    {
+                        cbChoosePassenger.SelectedItem = passenger;
+                        
+                    }                    
+                }
             }  
         }
 
         private void cmdDeletePassenger_Click(object sender, RoutedEventArgs e)
         {
             //Selected Passenger
+            clsPassenger passenger = cbChoosePassenger.SelectedItem as clsPassenger;
             //Delete the currently selected passenger (Done in another class)
+            clsPassengerMan.DeletePassenger(passenger.PassengerID);
             //Reload the passengers into the combo box
+            clsFlight selection = (clsFlight)cbChooseFlight.SelectedItem;
+            cbChoosePassenger.ItemsSource = clsPassengerMan.GetPassenger(selection.sFlightID);
             //reload the taken seats
+            FillPassengerSeats();
         }
 
         /// <summary>
