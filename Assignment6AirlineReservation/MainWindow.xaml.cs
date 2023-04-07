@@ -274,7 +274,7 @@ namespace Assignment6AirlineReservation
                 //Insert a new passenger into the database, then insert a record into the link table (Done in another class).
                 if (bAddPassengerMode == true)
                 {
-
+                    clsPassengerMan.AddPassenger(passenger.FirstName, passenger.LastName);
                 }
                 //bChangeSeatMode
                 //Only change the seat if the seat is empty (blue).
