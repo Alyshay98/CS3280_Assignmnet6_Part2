@@ -70,6 +70,11 @@ namespace Assignment6AirlineReservation
             }
         }
 
+        /// <summary>
+        /// Choose the passenger from the combo box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbChooseFlight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -101,35 +106,49 @@ namespace Assignment6AirlineReservation
             }
         }
 
-        //FillPassengerSeatsMethod
+        /// <summary>
+        /// Fill Passenger seats method
+        /// </summary>
         private void FillPassengerSeats()
         {
-            //Reset all seats in the selected flight to blue
-            //Loop through each passenger in the list
-            //Loop through each seat in the selected flight, like "c767_seats.Children"
-            //Then compare the passengers seat to the label's content and if they match, then change the background to red because the seat is taken.
-            
-            clsFlight selectedFlight = (clsFlight)(cbChooseFlight.SelectedItem);
-            if(selectedFlight.sFlightID == "2")
+            try
             {
-                
-                foreach(string SeatNum in clsFlightMan.GetFlightSeats(selectedFlight.sFlightID))
+                //Reset all seats in the selected flight to blue
+                //Loop through each passenger in the list
+                //Loop through each seat in the selected flight, like "c767_seats.Children"
+                //Then compare the passengers seat to the label's content and if they match, then change the background to red because the seat is taken.
+
+                clsFlight selectedFlight = (clsFlight)(cbChooseFlight.SelectedItem);
+                if (selectedFlight.sFlightID == "2")
                 {
-                    Label backgroundlbl = cA380_Seats.FindName("SeatA" + SeatNum) as Label;
-                    backgroundlbl.Background = Brushes.Red;
+
+                    foreach (string SeatNum in clsFlightMan.GetFlightSeats(selectedFlight.sFlightID))
+                    {
+                        Label backgroundlbl = cA380_Seats.FindName("SeatA" + SeatNum) as Label;
+                        backgroundlbl.Background = Brushes.Red;
+                    }
+                }
+                else
+                {
+                    foreach (string SeatNum in clsFlightMan.GetFlightSeats(selectedFlight.sFlightID))
+                    {
+                        Label backgroundlbl = c767_Seats.FindName("Seat" + SeatNum) as Label;
+                        backgroundlbl.Background = Brushes.Red;
+                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                foreach (string SeatNum in clsFlightMan.GetFlightSeats(selectedFlight.sFlightID))
-                {
-                    Label backgroundlbl = c767_Seats.FindName("Seat" + SeatNum) as Label;
-                    backgroundlbl.Background = Brushes.Red;
-                }
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-            
         }
 
+        /// <summary>
+        /// Add passenger method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmdAddPassenger_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -163,6 +182,11 @@ namespace Assignment6AirlineReservation
             }
         }
 
+        /// <summary>
+        /// What happens when the passenger selection is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbChoosePassenger_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -196,66 +220,115 @@ namespace Assignment6AirlineReservation
             }
         }
 
+        /// <summary>
+        /// Force the user to select a Seat
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmdChangeSeat_Click(object sender, RoutedEventArgs e)
         {
-            //Passenger is selected
-            clsPassenger passenger = cbChoosePassenger.SelectedItem as clsPassenger;
-            //Lock down window and set bChangeSeatMode, force user to select a seat
+            try
+            {
+                //Passenger is selected
+                clsPassenger passenger = cbChoosePassenger.SelectedItem as clsPassenger;
+                //Lock down window and set bChangeSeatMode, force user to select a seat
+                cbChooseFlight.IsEnabled = false;
+                cbChoosePassenger.IsEnabled = false;
+                gPassengerCommands.IsEnabled = false;
+                lblPassengersSeatNumber.IsEnabled = false;
+                cmdAddPassenger.IsEnabled = false;
+                cmdChangeSeat.IsEnabled = false;
+                cmdDeletePassenger.IsEnabled = false;
+                gbColorKey.IsEnabled = false;
+
+                bChangeSeatMode = true;
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
+        /// <summary>
+        /// What happens when you click a seat
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Seat_Click(object sender, MouseButtonEventArgs e)
         {
-            Label label = sender as Label;
-            clsFlight currFlight = cbChooseFlight.SelectedItem as clsFlight;
-            //This method will get called when a user clicks on any seat.
-            //
-            //What mode is the program in? bAddPassengerMode or bChangeSeatMode or regular seat selection
-            //
-            //bAddPassengerMode
-            //Insert a new passenger into the database, then insert a record into the link table (Done in another class).
-            if (bAddPassengerMode == true)
+            try
             {
-                
-            }
-            //bChangeSeatMode
-            //Only change the seat if the seat is empty (blue).
-            //If it's empty then update the link table to update the user's new seat (Done in another class).
-            else if (bChangeSeatMode == true)
-            {
-                if(!(label.Background == Brushes.Blue))
+                Label label = sender as Label;
+                clsFlight currFlight = cbChooseFlight.SelectedItem as clsFlight;
+                //This method will get called when a user clicks on any seat.
+                //
+                //What mode is the program in? bAddPassengerMode or bChangeSeatMode or regular seat selection
+                //
+                //bAddPassengerMode
+                //Insert a new passenger into the database, then insert a record into the link table (Done in another class).
+                if (bAddPassengerMode == true)
                 {
-                    return;
+
                 }
-            }
-            //Otherwise in regular seat selection:
-            //If a seat is taken (red), then loop through the passengers in the combo box,
-            //and keep looping until the seat that was clicked, its number matches a passenger's seat number,
-            //then select that combo box index or selected item and put the passenger's seat in the label.
-            else
-            {
-                //check the background of label only run the for loop if label.Background is red
-                foreach(clsPassenger passenger in cbChoosePassenger.Items)
+                //bChangeSeatMode
+                //Only change the seat if the seat is empty (blue).
+                //If it's empty then update the link table to update the user's new seat (Done in another class).
+                else if (bChangeSeatMode == true)
                 {
-                    if (clsPassengerMan.GetPassengerSeat(currFlight.sFlightID, passenger.PassengerID) == label.Content.ToString())
+                    if (!(label.Background == Brushes.Blue))
                     {
-                        cbChoosePassenger.SelectedItem = passenger;
-                        
-                    }                    
+                        return;
+                    }
                 }
-            }  
+                //Otherwise in regular seat selection:
+                //If a seat is taken (red), then loop through the passengers in the combo box,
+                //and keep looping until the seat that was clicked, its number matches a passenger's seat number,
+                //then select that combo box index or selected item and put the passenger's seat in the label.
+                else
+                {
+                    //check the background of label only run the for loop if label.Background is red
+                    foreach (clsPassenger passenger in cbChoosePassenger.Items)
+                    {
+                        if (clsPassengerMan.GetPassengerSeat(currFlight.sFlightID, passenger.PassengerID) == label.Content.ToString())
+                        {
+                            cbChoosePassenger.SelectedItem = passenger;
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }              
         }
 
+        /// <summary>
+        /// Deletes a Passenger
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmdDeletePassenger_Click(object sender, RoutedEventArgs e)
         {
-            //Selected Passenger
-            clsPassenger passenger = cbChoosePassenger.SelectedItem as clsPassenger;
-            //Delete the currently selected passenger (Done in another class)
-            clsPassengerMan.DeletePassenger(passenger.PassengerID);
-            //Reload the passengers into the combo box
-            clsFlight selection = (clsFlight)cbChooseFlight.SelectedItem;
-            cbChoosePassenger.ItemsSource = clsPassengerMan.GetPassenger(selection.sFlightID);
-            //reload the taken seats
-            FillPassengerSeats();
+            try
+            {
+                //Selected Passenger
+                clsPassenger passenger = cbChoosePassenger.SelectedItem as clsPassenger;
+                //Delete the currently selected passenger (Done in another class)
+                clsPassengerMan.DeletePassenger(passenger.PassengerID);
+                //Reload the passengers into the combo box
+                clsFlight selection = (clsFlight)cbChooseFlight.SelectedItem;
+                cbChoosePassenger.ItemsSource = clsPassengerMan.GetPassenger(selection.sFlightID);
+                //reload the taken seats
+                FillPassengerSeats();
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
         }
 
         /// <summary>

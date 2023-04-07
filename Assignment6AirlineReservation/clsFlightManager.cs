@@ -59,6 +59,12 @@ namespace Assignment6AirlineReservation
             }
         }
 
+        /// <summary>
+        /// Method to get the flight seats
+        /// </summary>
+        /// <param name="sFlightID"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public List<string> GetFlightSeats(string sFlightID)
         {
             try

@@ -129,6 +129,13 @@ namespace Assignment6AirlineReservation
             }
         }
 
+        /// <summary>
+        /// Gets the passenger seat
+        /// </summary>
+        /// <param name="sFlightID"></param>
+        /// <param name="sPassID"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public string GetPassengerSeat(string sFlightID, string sPassID)
         {
             try

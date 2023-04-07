@@ -34,3 +34,21 @@ C:\Users\blair\Desktop\School\CS 3280\CS3280_Assignmnet6_Part2\Assignment6Airlin
 C:\Users\blair\Desktop\School\CS 3280\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation.csproj.CoreCompileInputs.cache
 C:\Users\blair\Desktop\School\CS 3280\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation.exe
 C:\Users\blair\Desktop\School\CS 3280\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation.pdb
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\bin\Debug\Assignment6AirlineReservation.exe.config
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\bin\Debug\Assignment6AirlineReservation.exe
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\bin\Debug\Assignment6AirlineReservation.pdb
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation.csproj.AssemblyReference.cache
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation.csproj.SuggestedBindingRedirects.cache
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\MainWindow.g.cs
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\wndAddPassenger.g.cs
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\App.g.cs
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation_MarkupCompile.cache
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation_MarkupCompile.lref
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\MainWindow.baml
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\wndAddPassenger.baml
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation.g.resources
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation.Properties.Resources.resources
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation.csproj.GenerateResource.cache
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation.csproj.CoreCompileInputs.cache
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation.exe
+C:\Users\Shanen\Documents\GitHub\CS3280_Assignmnet6_Part2\Assignment6AirlineReservation\obj\Debug\Assignment6AirlineReservation.pdb

@@ -28,6 +28,12 @@ namespace Assignment6AirlineReservation
             }
         }
 
+        /// <summary>
+        /// SQL method to get the flight seats
+        /// </summary>
+        /// <param name="sFlightID"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static String GetFlightSeats(string sFlightID)
         {
             try
@@ -42,6 +48,13 @@ namespace Assignment6AirlineReservation
             }
         }
 
+        /// <summary>
+        /// SQL method to get the Passenger Seat
+        /// </summary>
+        /// <param name="sFlightID"></param>
+        /// <param name="sPassID"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static String GetPassengerSeat(string sFlightID, string sPassID)
         {
             try
@@ -81,6 +94,14 @@ namespace Assignment6AirlineReservation
             }
         }
 
+        /// <summary>
+        /// SQL method to update the seat Number
+        /// </summary>
+        /// <param name="lblSeat"></param>
+        /// <param name="sFlightID"></param>
+        /// <param name="sPassID"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static String UpdateSeatNumbers(string lblSeat, string sFlightID, string sPassID)
         {
             try
@@ -97,41 +118,112 @@ namespace Assignment6AirlineReservation
             }
         }
 
+        /// <summary>
+        /// SQL method to Insert Passenger
+        /// </summary>
+        /// <param name="FirstName"></param>
+        /// <param name="LastName"></param>
+        /// <returns></returns>
         public static String InsertPassenger(string FirstName, string LastName)
         {
-            string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('" + FirstName + "','" + LastName + "')";
+            try
+            {
+                string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('" + FirstName + "','" + LastName + "')";
 
-            return sSQL;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
+        /// <summary>
+        /// SQL Method to Insert into link table
+        /// </summary>
+        /// <param name="sFlightID"></param>
+        /// <param name="PassID"></param>
+        /// <param name="sSeatNum"></param>
+        /// <returns></returns>
         public static string InsertIntoLinkTable(string sFlightID, string PassID, string sSeatNum)
         {
-            string sSQL = "INSERT INTO Flight_Passenger_Link(Flight_ID, Passenger_ID, Seat_Number) " +
-                          "VALUES(" +sFlightID +" ," + PassID + ", " + sSeatNum +")";
-            return sSQL;
+            try
+            {
+                string sSQL = "INSERT INTO Flight_Passenger_Link(Flight_ID, Passenger_ID, Seat_Number) " +
+                          "VALUES(" + sFlightID + " ," + PassID + ", " + sSeatNum + ")";
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
+        /// <summary>
+        /// SQL method to Delete the Link
+        /// </summary>
+        /// <param name="sFlightID"></param>
+        /// <param name="PassID"></param>
+        /// <returns></returns>
         public static String DeleteLink(string sFlightID, string PassID)
         {
-            string sSQL = "Delete FROM FLIGHT_PASSENGER_LINK " +
-                          "WHERE FLIGHT_ID = " + sFlightID +
-                          "AND PASSENGER_ID = " + PassID;
-            return sSQL;
+            try
+            {
+
+                string sSQL = "Delete FROM FLIGHT_PASSENGER_LINK " +
+                              "WHERE FLIGHT_ID = " + sFlightID +
+                              "AND PASSENGER_ID = " + PassID;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
+        /// <summary>
+        /// SQL method to delete passenger
+        /// </summary>
+        /// <param name="PassID"></param>
+        /// <returns></returns>
         public static string DeletePassengers(string PassID)
         {
-            string sSQL = "Delete FROM PASSENGER " +
+            try
+            {
+                string sSQL = "Delete FROM PASSENGER " +
                           "WHERE PASSENGER_ID = " + PassID;
-            return sSQL;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            } 
         }
 
+        /// <summary>
+        /// SQL method to Insert a new Passenger
+        /// </summary>
+        /// <param name="FirstName"></param>
+        /// <param name="LastName"></param>
+        /// <returns></returns>
         public static String InsertNewPassenger(string FirstName, string LastName)
         {
-            string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('"+FirstName+"','" + LastName + "')";
+            try
+            {
+                string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('" + FirstName + "','" + LastName + "')";
 
-            sSQL = "SELECT Passenger_ID from Passenger where First_Name =" + FirstName + "AND Last_Name = " + LastName;
-            return sSQL;
+                sSQL = "SELECT Passenger_ID from Passenger where First_Name =" + FirstName + "AND Last_Name = " + LastName;
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         } 
     }
 }
