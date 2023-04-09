@@ -108,7 +108,7 @@ namespace Assignment6AirlineReservation
             {
                 string sSQL = "UPDATE FLIGHT_PASSENGER_LINK " +
                               "SET Seat_Number = " + lblSeat +
-                              "WHERE FLIGHT_ID =" + sFlightID + "AND PASSENGER_ID = " + sPassID;
+                              " WHERE FLIGHT_ID = " + sFlightID + " AND PASSENGER_ID = " + sPassID;
                 return sSQL;
             }
             catch (Exception ex)

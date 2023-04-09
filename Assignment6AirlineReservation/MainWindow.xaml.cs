@@ -52,6 +52,7 @@ namespace Assignment6AirlineReservation
             try
             {
                 InitializeComponent();
+                ResetSeats();
                 Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 CanvasA380.Visibility = Visibility.Collapsed;
                 Canvas767.Visibility = Visibility.Collapsed;
@@ -117,6 +118,7 @@ namespace Assignment6AirlineReservation
                 //Loop through each passenger in the list
                 //Loop through each seat in the selected flight, like "c767_seats.Children"
                 //Then compare the passengers seat to the label's content and if they match, then change the background to red because the seat is taken.
+                ResetSeats();
 
                 clsFlight selectedFlight = (clsFlight)(cbChooseFlight.SelectedItem);
                 if (selectedFlight.sFlightID == "2")
@@ -191,25 +193,34 @@ namespace Assignment6AirlineReservation
         {
             try
             {
+                
                 if(cbChoosePassenger.SelectedIndex == -1)
                 {
                     return;
                 }
+
+                ResetSeats();
+                FillPassengerSeats();
+
                 clsPassenger passenger = cbChoosePassenger.SelectedItem as clsPassenger;
 
                 clsFlight selectedFlight = (clsFlight)(cbChooseFlight.SelectedItem);
 
-                Label lblPassengersSeatNumber;
+                Label lblPassengerSeatNumber;
+
 
                 if (selectedFlight.sFlightID == "1")
                 {
-                    lblPassengersSeatNumber = c767_Seats.FindName("Seat" + clsPassengerMan.GetPassengerSeat(selectedFlight.sFlightID, passenger.PassengerID)) as Label;
-                    lblPassengersSeatNumber.Background = Brushes.Lime;
+                    lblPassengerSeatNumber = c767_Seats.FindName("Seat" + clsPassengerMan.GetPassengerSeat(selectedFlight.sFlightID, passenger.PassengerID)) as Label;
+                    lblPassengerSeatNumber.Background = Brushes.Lime;
+                    lblPassengersSeatNumber.Content = lblPassengerSeatNumber.Content.ToString();
+
                 }
                 else
                 {
-                    lblPassengersSeatNumber = cA380_Seats.FindName("SeatA" + clsPassengerMan.GetPassengerSeat(selectedFlight.sFlightID, passenger.PassengerID)) as Label;
-                    lblPassengersSeatNumber.Background = Brushes.Lime;
+                    lblPassengerSeatNumber = cA380_Seats.FindName("SeatA" + clsPassengerMan.GetPassengerSeat(selectedFlight.sFlightID, passenger.PassengerID)) as Label;
+                    lblPassengerSeatNumber.Background = Brushes.Lime;
+                    lblPassengersSeatNumber.Content = lblPassengerSeatNumber.Content.ToString();
                 }
                 
             }
@@ -217,6 +228,31 @@ namespace Assignment6AirlineReservation
             {
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
                     MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Resets the seats to blue
+        /// </summary>
+        /// <exception cref="Exception"></exception>
+        public void ResetSeats()
+        {
+            try
+            {
+                foreach (Label lblSeat in c767_Seats.Children)
+                {
+                    lblSeat.Background = Brushes.Blue;
+                }
+
+                foreach (Label lblSeat in cA380_Seats.Children)
+                {
+                    lblSeat.Background = Brushes.Blue;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
@@ -276,10 +312,11 @@ namespace Assignment6AirlineReservation
                 {
                     clsPassengerMan.AddPassenger(passenger.FirstName, passenger.LastName);
                 }
+                bAddPassengerMode = false;
                 //bChangeSeatMode
                 //Only change the seat if the seat is empty (blue).
                 //If it's empty then update the link table to update the user's new seat (Done in another class).
-                else if (bChangeSeatMode == true)
+                if (bChangeSeatMode == true)
                 {
                     if (!(label.Background == Brushes.Blue))
                     {
@@ -290,22 +327,36 @@ namespace Assignment6AirlineReservation
                         clsPassengerMan.UpdatePassengerSeat(label.Content.ToString(), currFlight.sFlightID, passenger.PassengerID);
                         label.Background = Brushes.Lime;
                     }
+                    FillPassengerSeats();
+                    cbChooseFlight.IsEnabled = true;
+                    cbChoosePassenger.IsEnabled = true;
+                    gPassengerCommands.IsEnabled = true;
+                    lblPassengersSeatNumber.IsEnabled = true;
+                    cmdAddPassenger.IsEnabled = true;
+                    cmdChangeSeat.IsEnabled = true;
+                    cmdDeletePassenger.IsEnabled = true;
+                    gbColorKey.IsEnabled = true;
+
+                    bChangeSeatMode = false;
                 }
                 //Otherwise in regular seat selection:
                 //If a seat is taken (red), then loop through the passengers in the combo box,
                 //and keep looping until the seat that was clicked, its number matches a passenger's seat number,
                 //then select that combo box index or selected item and put the passenger's seat in the label.
-                else
+                if(bAddPassengerMode == false && bChangeSeatMode == false)
                 {
                     //check the background of label only run the for loop if label.Background is red
-                    foreach (clsPassenger passengers in cbChoosePassenger.Items)
+                    if(label.Background == Brushes.Red)
                     {
-                        if (clsPassengerMan.GetPassengerSeat(currFlight.sFlightID, passengers.PassengerID) == label.Content.ToString())
+                        foreach (clsPassenger passengers in cbChoosePassenger.Items)
                         {
-                            cbChoosePassenger.SelectedItem = passengers;
-
+                            if (clsPassengerMan.GetPassengerSeat(currFlight.sFlightID, passengers.PassengerID) == label.Content.ToString())
+                            {
+                                cbChoosePassenger.SelectedItem = passengers;
+                            }
+                            lblPassengersSeatNumber.Content = label.Content.ToString();
                         }
-                    }
+                    }                    
                 }
             }
             catch (Exception ex)
