@@ -176,6 +176,8 @@ namespace Assignment6AirlineReservation
 
                     bAddPassengerMode = true;
                 }
+
+                
             }
             catch (Exception ex)
             {
@@ -201,6 +203,8 @@ namespace Assignment6AirlineReservation
 
                 ResetSeats();
                 FillPassengerSeats();
+                cmdAddPassenger.IsEnabled = true;
+                cmdChangeSeat.IsEnabled = true;
 
                 clsPassenger passenger = cbChoosePassenger.SelectedItem as clsPassenger;
 
@@ -310,9 +314,23 @@ namespace Assignment6AirlineReservation
                 //Insert a new passenger into the database, then insert a record into the link table (Done in another class).
                 if (bAddPassengerMode == true)
                 {
+                    if (!(label.Background == Brushes.Blue))
+                    {
+                        return;
+                    }
                     clsPassengerMan.AddPassenger(wndAddPass.GetFirstName(), wndAddPass.GetLastName(), label.Content.ToString(),currFlight.sFlightID);
                     cbChoosePassenger.ItemsSource = clsPassengerMan.GetPassenger(currFlight.sFlightID);
                 }
+
+                FillPassengerSeats();
+                cbChooseFlight.IsEnabled = true;
+                cbChoosePassenger.IsEnabled = true;
+                gPassengerCommands.IsEnabled = true;
+                lblPassengersSeatNumber.IsEnabled = true;
+                cmdAddPassenger.IsEnabled = true;
+                cmdChangeSeat.IsEnabled = true;
+                cmdDeletePassenger.IsEnabled = true;
+                gbColorKey.IsEnabled = true;
                 bAddPassengerMode = false;
                 //bChangeSeatMode
                 //Only change the seat if the seat is empty (blue).
@@ -337,7 +355,8 @@ namespace Assignment6AirlineReservation
                     cmdChangeSeat.IsEnabled = true;
                     cmdDeletePassenger.IsEnabled = true;
                     gbColorKey.IsEnabled = true;
-
+                    lblPassengersSeatNumber.Content = label.Content.ToString();
+                    label.Background = Brushes.Lime;
                     bChangeSeatMode = false;
                 }
                 //Otherwise in regular seat selection:
@@ -346,8 +365,12 @@ namespace Assignment6AirlineReservation
                 //then select that combo box index or selected item and put the passenger's seat in the label.
                 if(bAddPassengerMode == false && bChangeSeatMode == false)
                 {
+                    if (!(label.Background == Brushes.Blue))
+                    {
+                        return;
+                    }
                     //check the background of label only run the for loop if label.Background is red
-                    if(label.Background == Brushes.Red)
+                    if (label.Background == Brushes.Red)
                     {
                         foreach (clsPassenger passengers in cbChoosePassenger.Items)
                         {
@@ -386,6 +409,9 @@ namespace Assignment6AirlineReservation
                 cbChoosePassenger.ItemsSource = clsPassengerMan.GetPassenger(selection.sFlightID);
                 //reload the taken seats
                 FillPassengerSeats();
+                lblPassengersSeatNumber.Content = "";
+                cmdAddPassenger.IsEnabled = false;
+                cmdChangeSeat.IsEnabled = false;
             }
             catch (Exception ex)
             {
