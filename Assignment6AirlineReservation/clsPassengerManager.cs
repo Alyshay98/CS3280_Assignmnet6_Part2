@@ -67,26 +67,18 @@ namespace Assignment6AirlineReservation
         /// <param name="LastName"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public List<clsPassenger> AddPassenger(string FirstName, string LastName)
+        public void AddPassenger(string FirstName, string LastName, string sSeat, string sFlightID)
         {
             try
             {
-                DataSet ds = new DataSet();
-                int iRet = 0;
-                List<clsPassenger> Passengers = new List<clsPassenger>();
+                string sSQL = clsSQL.InsertPassenger(FirstName, LastName);
+                dataAccess.ExecuteNonQuery(sSQL);
 
-                string sSQL = clsSQL.InsertNewPassenger(FirstName, LastName);
+                sSQL = clsSQL.GetNewPassengersID(FirstName, LastName);
+                string PassID = dataAccess.ExecuteScalarSQL(sSQL);
 
-                ds = dataAccess.ExecuteSQLStatement(sSQL, ref iRet);
-
-                foreach (DataRow dr in ds.Tables[0].Rows)
-                {
-                    clsPassenger passenger = new clsPassenger();
-                    passenger.FirstName = dr[0].ToString();
-                    passenger.LastName = dr[1].ToString();
-                    Passengers.Add(passenger);
-                }
-                return Passengers;
+                sSQL = clsSQL.InsertIntoLinkTable(sFlightID, PassID, sSeat);
+                dataAccess.ExecuteNonQuery(sSQL);
             }
             catch (Exception ex)
             {
@@ -128,10 +120,10 @@ namespace Assignment6AirlineReservation
         {
             try
             {
-                string sSQL = clsSQL.DeletePassenger(PassID);
+                string sSQL = clsSQL.DeleteLink(sFlightID, PassID);
                 dataAccess.ExecuteNonQuery(sSQL);
 
-                sSQL = clsSQL.DeleteLink(sFlightID, PassID);
+                sSQL = clsSQL.DeletePassenger(PassID);
                 dataAccess.ExecuteNonQuery(sSQL);
             }
             catch (Exception ex)

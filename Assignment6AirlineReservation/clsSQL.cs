@@ -128,7 +128,7 @@ namespace Assignment6AirlineReservation
         {
             try
             {
-                string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('" + FirstName + "','" + LastName + "')";
+                string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('" + FirstName + "', '" + LastName + "')";
 
                 return sSQL;
             }
@@ -151,7 +151,7 @@ namespace Assignment6AirlineReservation
             try
             {
                 string sSQL = "INSERT INTO Flight_Passenger_Link(Flight_ID, Passenger_ID, Seat_Number) " +
-                          "VALUES(" + sFlightID + " ," + PassID + ", " + sSeatNum + ")";
+                          "VALUES(" + sFlightID + " , " + PassID + ", " + sSeatNum + ")";
                 return sSQL;
             }
             catch (Exception ex)
@@ -174,7 +174,7 @@ namespace Assignment6AirlineReservation
 
                 string sSQL = "Delete FROM FLIGHT_PASSENGER_LINK " +
                               "WHERE FLIGHT_ID = " + sFlightID +
-                              "AND PASSENGER_ID = " + PassID;
+                              " AND PASSENGER_ID = " + PassID;
                 return sSQL;
             }
             catch (Exception ex)
@@ -210,13 +210,13 @@ namespace Assignment6AirlineReservation
         /// <param name="FirstName"></param>
         /// <param name="LastName"></param>
         /// <returns></returns>
-        public static String InsertNewPassenger(string FirstName, string LastName)
+        /*public static String InsertNewPassenger(string FirstName, string LastName)
         {
             try
             {
-                string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('" + FirstName + "','" + LastName + "')";
+                string sSQL = "INSERT INTO PASSENGER(First_Name, Last_Name) VALUES('" + FirstName + "', '" + LastName + "')";
 
-                sSQL = "SELECT Passenger_ID from Passenger where First_Name =" + FirstName + "AND Last_Name = " + LastName;
+                sSQL = "SELECT Passenger_ID from Passenger where First_Name = " + FirstName + " AND Last_Name = " + LastName;
                 return sSQL;
             }
             catch (Exception ex)
@@ -224,6 +224,20 @@ namespace Assignment6AirlineReservation
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
-        } 
+        }*/
+
+        public static String GetNewPassengersID(string FirstName, string LastName)
+        {
+            try
+            {
+                string sSQL = "SELECT Passenger_ID from Passenger where First_Name = '" + FirstName + "' AND Last_Name = '" + LastName + "'";
+                return sSQL;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
     }
 }

@@ -25,6 +25,16 @@ namespace Assignment6AirlineReservation
         /// </summary>
         public static bool boolSaveClicked = false;
 
+        public string GetFirstName()
+        {
+            return txtFirstName.Text;
+        }
+
+        public string GetLastName()
+        {
+            return txtLastName.Text;
+        }
+
 
         /// <summary>
         /// constructor for the add passenger window
